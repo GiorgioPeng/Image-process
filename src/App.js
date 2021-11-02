@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { GlobalStateProvider } from "./globalState";
+import { Divider } from "@material-ui/core/";
+import Uploader from './Uploader'
+import Channels from './Canvases/Channels';
+import Gradient from './Canvases/Gradient';
+import RobortGradient from './Canvases/RobortGradient';
+import Fourier from './Canvases/Fourier';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalStateProvider>
+      <Uploader />
+      <Divider />
+      <Channels />
+      <Divider />
+      <Gradient />
+      <Divider />
+      <RobortGradient />
+      <Divider />
+      {/* <Fourier /> */}
+    </GlobalStateProvider>
   );
 }
 
