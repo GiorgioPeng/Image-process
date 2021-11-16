@@ -9,70 +9,29 @@ export default function Fourier() {
     const FourierRef = React.useRef(null)
     const [state,] = useGlobalState();
 
-    function fft2(dataArray, width, height) {
-        // const fft = new fftFunction(dataArray)
-        let r = 1;
-        let i = 1;
-        while (i * 2 < width) {
-            i *= 2;
-            r++;
-        }
-        let width2 = 1 << r;
-        r = 1;
-        i = 1;
-        while (i * 2 < height) {
-            i *= 2;
-            r++;
-        }
-        let height2 = 1 << r;
-
-        let dataArrayTemp = [];
-        for (let i = 0; i < height2; i++) {
-            for (let j = 0; j < width2; j++) {
-                if (i >= height || j >= width) {
-                    dataArrayTemp.push(0);
+    function fft2(dataArray) {
+        let height = dataArray.length
+        let width = dataArray[1].length
+        let output = []
+        let re,im,temp,move
+        for(let i =0;i<height;i++) {
+            output.push([])
+            for(let j = 0;j<width;j++){
+                re = 0
+                im = 0
+                for(let x=0;x<height;x++){
+                    for(let y=0;y<width;y++){
+                        temp = i*x/height+j*y/width
+                        move = (x+y)%2===0?1:-1
+                        re += dataArray[x][y]*Math.cos(-2*Math.PI*temp)*move
+                        im += dataArray[x][y]*Math.sin(-2*Math.PI*temp)*move
+                    }
                 }
-                else {
-                    dataArrayTemp.push(dataArray[i * width + j]);
-                }
+                // console.log((Math.sqrt(re*re+im*im))/Math.sqrt(width*height))
+                output[i].push((Math.sqrt(re*re+im*im))/Math.sqrt(width*height))
             }
         }
-
-        dataArray = dataArrayTemp;
-        width = width2;
-        height = height2;
-
-        let dataTemp = [];
-        let dataArray2 = [];
-        for (let i = 0; i < height; i++) {
-            dataTemp = [];
-            for (let j = 0; j < width; j++) {
-                dataTemp.push(dataArray[i * width + j]);
-            }
-            dataTemp = new fftFunction(dataTemp);
-            for (let j = 0; j < width; j++) {
-                dataArray2.push(dataTemp[j]);
-            }
-        }
-        dataArray = dataArray2;
-        dataArray2 = [];
-        for (let i = 0; i < width; i++) {
-            let dataTemp = [];
-            for (let j = 0; j < height; j++) {
-                dataTemp.push(dataArray[j * width + i]);
-            }
-            dataTemp = new fftFunction(dataTemp);
-            for (let j = 0; j < height; j++) {
-                dataArray2.push(dataTemp[j]);
-            }
-        }
-        dataArray = [];
-        for (let i = 0; i < height; i++) {
-            for (let j = 0; j < width; j++) {
-                dataArray[j * height + i] = dataArray2[i * width + j];
-            }
-        }
-        return dataArray;
+        return output
     }
 
     React.useEffect(() => {
@@ -83,22 +42,22 @@ export default function Fourier() {
                 temp.push(state.red.slice(i, i + state.image.width))
             }
             console.log(temp)
-            temp = fft2(temp,state.image.width,state.image.height)
-            console.log(temp)
+            let temp1 = fft2(temp)
+            console.log(temp1)
             // for (let i = 0; i < state.image.height - 1; i++) {
             //     for (let j = 0; j < state.image.width - 1; j++) {
             //         temp[i][j] = (temp[i][j] - temp[i + 1][j]) + (temp[i][j] - temp[i][j + 1])
             //     }
             // }
-            let temp1 = []
-            for (let i = 0; i < state.image.height; i++) {
-                for (let j = 0; j < state.image.width; j++) {
-                    temp1.push(temp[i][j])
-                }
-            }
-            // let maxGradiant = Math.max(...temp1)
-            // let minGradiant = Math.min(...temp1)
-            // temp1 = temp1.map(i => (i - minGradiant) / (maxGradiant - minGradiant) * 255)
+            // let temp1 = []
+            // for (let i = 0; i < state.image.height; i++) {
+            //     for (let j = 0; j < state.image.width; j++) {
+            //         temp1.push(temp[i][j])
+            //     }
+            // }
+            // // let maxGradiant = Math.max(...temp1)
+            // // let minGradiant = Math.min(...temp1)
+            // // temp1 = temp1.map(i => (i - minGradiant) / (maxGradiant - minGradiant) * 255)
             temp = []
             for (let i = 0; i < temp1.length; i++) {
                 temp.push(temp1[i])

@@ -23,7 +23,7 @@ class ErrorBoundary extends React.Component {
             return (<>
                 <Alert severity="error">
                     <AlertTitle>内存炸了</AlertTitle>
-                    <strong>尝试刷新页面!</strong>如果再次上传不行，就上传小一点的图片吧！
+                    （内存调度过来可能仍然能继续运行）如果下面处理结果没有显示<strong>尝试刷新页面!</strong>并再次上传|<strong>或者上传小一点的图片吧！</strong>
                 </Alert>
                 {this.props.children}
             </>);
