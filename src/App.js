@@ -6,19 +6,22 @@ import Channels from './Canvases/Channels';
 import Gradient from './Canvases/Gradient';
 import RobortGradient from './Canvases/RobortGradient';
 import Fourier from './Canvases/Fourier';
+import ErrorBoundary from './ErrorBoundary';
 
 function App() {
   return (
     <GlobalStateProvider>
-      <Uploader />
-      <Divider />
-      <Channels />
-      <Divider />
-      <Gradient />
-      <Divider />
-      <RobortGradient />
-      <Divider />
-      {/* <Fourier /> */}
+      <ErrorBoundary>
+        <Uploader />
+        <Divider />
+        <Channels />
+        <Divider />
+        <Gradient />
+        <Divider />
+        <RobortGradient />
+        <Divider />
+        {/* <Fourier /> */}
+      </ErrorBoundary>
     </GlobalStateProvider>
   );
 }

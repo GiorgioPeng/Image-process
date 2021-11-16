@@ -1,4 +1,3 @@
-import { blue, red } from '@material-ui/core/colors';
 import * as React from 'react';
 import { useGlobalState } from '../globalState';
 

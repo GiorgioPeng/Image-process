@@ -6,6 +6,12 @@ import { useGlobalState } from '../globalState';
 const Input = styled('input')({
     display: 'none',
 });
+const H1 = styled('H1')(({ theme }) => ({
+    ...theme.typography.h1,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(1),
+  }));
+  
 
 export default function UploadButtons() {
     const [state, updateState,] = useGlobalState();
@@ -40,7 +46,8 @@ export default function UploadButtons() {
         updateState('alpha',alpha)
     }
     return (
-        <div>
+        <div style={{'margin':'20vh auto', 'display': 'flex','alignItems':'center','flexDirection':'column'}}>
+            <H1>Upload is all you need.</H1>
             <label htmlFor="contained-button-file">
                 <Input accept="image/*" id="contained-button-file" type="file" onChange={upload} />
                 <Button variant="contained" component="span">
