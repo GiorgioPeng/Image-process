@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { useGlobalState } from '../globalState';
+import { styled } from '@material-ui/core/styles';
 
+const H6 = styled('H6')(({ theme }) => ({
+    ...theme.typography.h6,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(1),
+  }));
 
 export default function RobortGradient() {
     const redGradientRef = React.useRef(null)
@@ -131,21 +137,21 @@ export default function RobortGradient() {
         <div>
             {state.imageData.length !== 0 ?
                 <div style={{ 'display': 'flex', 'justifyContent': 'space-around' }}>
-                    <div>
-                        <p>红色通道差分罗伯特梯度</p>
+                    <div style={{ 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'space-around' }}>
+                        <H6>红色通道差分罗伯特梯度</H6>
                         <canvas ref={redGradientRef} />
                     </div>
-                    <div>
-                        <p>绿色通道差分罗伯特梯度</p>
+                    <div style={{ 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'space-around' }}>
+                        <H6>绿色通道差分罗伯特梯度</H6>
                         <canvas ref={greenGradientRef} />
                     </div>
-                    <div>
-                        <p>蓝色通道差分罗伯特梯度</p>
+                    <div style={{ 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'space-around' }}>
+                        <H6>蓝色通道差分罗伯特梯度</H6>
                         <canvas ref={blueGradientRef}></canvas>
                     </div>
 
-                    <div>
-                        <p>差分罗伯特梯度图</p>
+                    <div style={{ 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'space-around' }}>
+                        <H6>差分罗伯特梯度图</H6>
                         <canvas ref={gradientRef}></canvas>
                     </div>
                 </div>

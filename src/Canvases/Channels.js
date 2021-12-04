@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { useGlobalState } from '../globalState';
+import { styled } from '@material-ui/core/styles';
 
+const H6 = styled('H6')(({ theme }) => ({
+    ...theme.typography.h6,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(1),
+  }));
 
 export default function Channels() {
     const redRef = React.useRef(null)
@@ -61,15 +67,15 @@ export default function Channels() {
             {state.imageData.length !== 0 ?
                 <div style={{'display': 'flex','justifyContent':'space-around'}}>
                     <div>
-                        <p>红色通道</p>
+                        <H6>红色通道</H6>
                         <canvas ref={redRef} />
                     </div>
                     <div>
-                        <p>绿色通道</p>
+                        <H6>绿色通道</H6>
                         <canvas ref={greenRef} />
                     </div>
                     <div>
-                        <p>蓝色通道</p>
+                        <H6>蓝色通道</H6>
                         <canvas ref={blueRef}></canvas>
                     </div>
                 </div>

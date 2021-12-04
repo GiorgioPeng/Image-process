@@ -1,6 +1,13 @@
 import * as React from 'react';
 import { useGlobalState } from '../globalState';
 
+import { styled } from '@material-ui/core/styles';
+
+const H6 = styled('H6')(({ theme }) => ({
+    ...theme.typography.h6,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(1),
+  }));
 
 export default function Channels() {
     const objectRef = React.useRef(null)
@@ -8,7 +15,7 @@ export default function Channels() {
     const [state,] = useGlobalState();
     const calcGas = (u, sigma, x) => {
         sigma += 1e-9
-        return (1 / Math.pow((2 * Math.PI * sigma),2) * Math.exp(-Math.pow((x - u), 2) / (2 * sigma)))
+        return (1 / Math.pow((2 * Math.PI * sigma),0.5) * Math.exp(-Math.pow((x - u), 2) / (2 * sigma)))
     }
     const calcKL = (t, hist) => {
         // console.log(hist)
@@ -32,7 +39,7 @@ export default function Channels() {
             u0t += i * left[i]
         }
         for (let i = t; i < 256; i++) {
-            ubt += (i) * right[i-t]
+            ubt += i * right[i-t]
         }
 
         for (let i = 0; i < t; i++) {
@@ -83,6 +90,7 @@ export default function Channels() {
                 let kl = calcKL(i, grayArr)
                 // console.log(kl)
                 if (minKl > kl) {
+                    minKl = kl
                     threshold = i
                 }
             }
@@ -101,14 +109,14 @@ export default function Channels() {
                     objectGreen.push(0)
                     objectBlue.push(0)
 
-                    bgRed.push(1)
-                    bgGreen.push(1)
-                    bgBlue.push(1)
+                    bgRed.push(255)
+                    bgGreen.push(255)
+                    bgBlue.push(255)
                 }
                 else{
-                    objectRed.push(1)
-                    objectGreen.push(1)
-                    objectBlue.push(1)
+                    objectRed.push(255)
+                    objectGreen.push(255)
+                    objectBlue.push(255)
 
                     bgRed.push(0)
                     bgGreen.push(0)
@@ -123,7 +131,7 @@ export default function Channels() {
                 temp.push(objectBlue[i])
                 temp.push(state.alpha[i])
             }
-            // console.log(temp)
+            console.log(temp)
 
             temp = new Uint8ClampedArray(temp)
             objectRef.current.width = state.image.width || 400
@@ -157,12 +165,12 @@ export default function Channels() {
         <div>
             {state.imageData.length !== 0 ?
                 <div style={{ 'display': 'flex', 'justifyContent': 'space-around' }}>
-                    <div>
-                        <p>背景|前景</p>
+                    <div style={{ 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'space-around' }}>
+                        <H6>灰度直方图双峰混合高斯下背景|前景</H6>
                         <canvas ref={backgroundRef} />
                     </div>
-                    <div>
-                        <p>前景|背景</p>
+                    <div style={{ 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'space-around' }}>
+                        <H6>灰度直方图双峰混合高斯下前景|背景</H6>
                         <canvas ref={objectRef} />
                     </div>
                 </div>
