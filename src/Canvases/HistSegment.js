@@ -94,7 +94,7 @@ export default function Channels() {
                     threshold = i
                 }
             }
-            console.log(threshold)
+            // console.log(threshold)
             let objectRed = [];
             let objectGreen = [];
             let objectBlue = [];
@@ -131,7 +131,7 @@ export default function Channels() {
                 temp.push(objectBlue[i])
                 temp.push(state.alpha[i])
             }
-            console.log(temp)
+            // console.log(temp)
 
             temp = new Uint8ClampedArray(temp)
             objectRef.current.width = state.image.width || 400
